@@ -1,0 +1,99 @@
+.parent {
+
+    padding-left: 15px;
+
+    .topContainer {
+
+        height: 260px;
+        background: white;
+
+        .header {
+
+            padding-bottom: 6px;
+            
+        }
+
+        .cards {
+
+            display: flex;
+            //  flex-flow: column;
+            gap: 20px;
+
+            .card {
+
+                width: fit-content;
+                border-radius: 30px;
+                padding: 25px;
+                background: lightgray;
+                cursor: pointer;
+
+                .header {
+
+                    .title {
+
+                        display: flex;
+                        border: 1px solid black;
+                        border-radius: 20px;
+                        padding: 10px 20px;
+                        font-family: 'Poppins-Regular';
+                        font-size: 14px;
+                        width: fit-content;
+
+                    }
+
+                }
+
+                .content {
+
+                    display: flex;
+                    gap: 60px;
+                    align-items: center;
+                    padding-top: 30px;
+                    margin-bottom: -15px;
+
+                    .count {
+
+                        font-family: 'Poppins-Medium';
+                        font-size: 50px;
+
+                    }
+
+                    .nextArrow {
+
+                        border: 1px solid;
+                        padding: 6px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        width: fit-content;
+                        height: fit-content;
+                        border-radius: 50%;
+
+                    }
+
+                }
+
+            }
+
+            .totalStudents {
+
+                background: #ffbb3f;
+
+                .content {
+
+                    .studentsCount {
+
+                        font-family: 'Poppins-Medium';
+                        font-size: 50px;
+
+                    }
+
+                }
+
+            }
+
+        }
+
+    }
+
+}

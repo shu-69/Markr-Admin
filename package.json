@@ -1,7 +1,11 @@
 {
   "name": "crecom-online-admin-panel",
   "version": "0.0.0",
+  "main": "main.js",
   "scripts": {
+    "electron": "electron .",
+    "electron-build": "ng build && electron .",
+    "electron-package-win": "ng build && electron-packager . --no-prune --ignore=/node_modules --ignore=/e2e --ignore=/src --overwrite",
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
@@ -15,9 +19,12 @@
     "@angular/compiler": "^15.0.0",
     "@angular/core": "^15.0.0",
     "@angular/forms": "^15.0.0",
+    "@angular/material": "^15.2.1",
     "@angular/platform-browser": "^15.0.0",
     "@angular/platform-browser-dynamic": "^15.0.0",
     "@angular/router": "^15.0.0",
+    "@fortawesome/angular-fontawesome": "^0.12.1",
+    "font-awesome": "^4.7.0",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.12.0"
@@ -27,6 +34,8 @@
     "@angular/cli": "~15.0.4",
     "@angular/compiler-cli": "^15.0.0",
     "@types/jasmine": "~4.3.0",
+    "electron": "^23.1.2",
+    "electron-packager": "^17.1.1",
     "jasmine-core": "~4.5.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.1.0",

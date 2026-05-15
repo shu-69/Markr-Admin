@@ -1,0 +1,399 @@
+.parent {
+
+    .header {
+
+        padding: 20px;
+        display: flex;
+        flex-flow: column;
+        gap: 20px;
+
+        .titleContainer {
+
+            border-bottom: 1px solid lightgray;
+            padding-bottom: 15px;
+
+            .title {
+
+                font-family: 'Krona One';
+                font-size: 30px;
+                font-weight: bolder;
+                text-transform: uppercase;
+
+            }
+
+        }
+
+        .options {
+
+            display: flex;
+            justify-content: space-between;
+
+            div.optionsContainer {
+
+                display: flex;
+                gap: 20px;
+                align-items: center;
+
+                mat-icon {
+
+                    background: #80808047;
+                    padding: 15px 20px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    border-radius: 8px;
+                    font-size: 22px;
+                    cursor: pointer;
+
+                }
+
+            }
+
+        }
+
+        .searchContainer {
+
+            background: #f7f7f7;
+            display: flex;
+            flex-flow: column;
+            gap: 30px;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            border-radius: 10px;
+            border: 4px solid #d3d3d324;
+
+            .closeIcon {
+
+                position: absolute;
+                margin-top: -140px;
+                right: 40px;
+                color: gray;
+                cursor: pointer;
+
+            }
+
+            .searchByOptionsContainer {
+
+                display: flex;
+                align-items: center;
+                gap: 20px;
+                font-family: 'Poppins-Regular';
+
+                mat-chip-listbox {
+
+                    mat-chip-option {
+
+                        font-family: 'Poppins-Regular';
+
+                    }
+
+                }
+
+            }
+
+            .searchResultStatusContainer {
+
+                .searchResultsCount {
+
+                    font-family: 'Poppins-Regular', sans-serif;
+
+                }
+
+            }
+
+            .form button {
+                border: none;
+                background: none;
+                color: #8b8ba7;
+            }
+
+            /* styling of whole input container */
+            .form {
+                --timing: 0.3s;
+                --input-bg: #fff;
+                --border-color: #2f2ee9;
+                --border-radius: 30px;
+                --after-border-radius: 1px;
+                position: relative;
+                display: flex;
+                width: 80%;
+                height: 45px;
+                align-items: center;
+                padding-inline: 0.8em;
+                transition: border-radius 0.5s ease;
+                background: var(--input-bg, #fff);
+                box-shadow: 0 0 20px 5px #c8c8c87a;
+                border-radius: 10px;
+            }
+
+            /* styling of Input */
+            .input {
+                font-size: 0.9rem;
+                background-color: transparent;
+                width: 100%;
+                height: 100%;
+                padding-inline: 0.5em;
+                padding-block: 0.7em;
+                border: none;
+                font-family: 'Poppins-Regular';
+            }
+
+            /* styling of animated border */
+            .form:before {
+                content: "";
+                position: absolute;
+                background: var(--border-color);
+                transform: scaleX(0);
+                transform-origin: center;
+                width: 100%;
+                height: var(--border-height);
+                left: 0;
+                bottom: 0;
+                border-radius: 1px;
+                transition: transform var(--timing) ease;
+            }
+
+            /* Hover on Input */
+            .form:focus-within {
+                border-radius: var(--after-border-radius);
+            }
+
+            input:focus {
+                outline: none;
+            }
+
+            /* here is code of animated border */
+            .form:focus-within:before {
+                transform: scale(1);
+            }
+
+            /* styling of close button */
+            /* == you can click the close button to remove text == */
+            .reset {
+                border: none;
+                background: none;
+                opacity: 0;
+                visibility: hidden;
+            }
+
+            /* close button shown when typing */
+            input:not(:placeholder-shown)~.reset {
+                opacity: 1;
+                visibility: visible;
+            }
+
+            /* sizing svg icons */
+            .form svg {
+                width: 17px;
+                margin-top: 3px;
+            }
+
+        }
+
+    }
+
+    .content {
+
+        .submissionsContainer {
+
+            display: grid;
+            gap: 20px;
+            padding: 20px;
+            padding-top: 0;
+
+            .submission {
+
+                border-radius: 10px;
+
+                .userDetailsContainer {
+
+                    background: black;
+                    display: flex;
+                    padding: 30px;
+                    gap: 20px;
+                    color: white;
+                    font-family: 'Poppins-Regular', sans-serif;
+                    border-top-left-radius: 10px;
+                    border-top-right-radius: 10px;
+
+                    .profileImage {
+
+                        aspect-ratio: 1;
+                        height: 60px;
+
+                        img {
+
+                            width: 100%;
+                            height: 100%;
+                            border-radius: 12px;
+
+                        }
+
+                    }
+
+                    .candidateDetails {
+
+                        display: flex;
+                        flex-flow: column;
+                        justify-content: space-between;
+
+                    }
+
+                }
+
+                .submissionDetails {
+
+                    padding: 20px;
+                    background: sandybrown;
+                    display: flex;
+                    flex-flow: column;
+                    gap: 10px;
+
+                    .row {
+
+                        display: flex;
+                        gap: 20px;
+                        font-family: 'Poppins-Regular';
+
+                    }
+
+                }
+
+                .footer {
+
+                    padding: 0 20px 20px 20px;
+                    background: sandybrown;
+                    display: flex;
+                    justify-content: space-between;
+                    border-bottom-left-radius: 10px;
+                    border-bottom-right-radius: 10px;
+
+                    .options {
+
+                        span.icon {
+
+                            height: 100%;
+                            display: flex;
+                            aspect-ratio: 1;
+                            align-items: center;
+                            justify-content: center;
+                            background: black;
+                            border-radius: 10px;
+                            color: white;
+                            font-size: 20px;
+                            cursor: pointer;
+
+                        }
+
+                        .view-result {
+                            background: black;
+                            color: white;
+                            padding: 0.35em;
+                            padding-left: 1.2em;
+                            font-size: 17px;
+                            font-weight: 500;
+                            border-radius: 0.9em;
+                            border: none;
+                            letter-spacing: 0.05em;
+                            display: flex;
+                            align-items: center;
+                            box-shadow: inset 0 0 1.6em -0.6em black;
+                            overflow: hidden;
+                            position: relative;
+                            height: 2.8em;
+                            padding-right: 3.3em;
+                            font-family: 'Poppins-Regular', sans-serif;
+                            cursor: pointer;
+                            font-size: 14px;
+                        }
+
+                        .view-result .icon {
+                            background: white;
+                            margin-left: 1em;
+                            position: absolute;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            height: 2.2em;
+                            width: 2.2em;
+                            border-radius: 0.7em;
+                            //box-shadow: 0.1em 0.1em 0.6em 0.2em #7b52b9;
+                            right: 0.3em;
+                            transition: all 0.3s;
+                        }
+
+                        .view-result:hover .icon {
+                            width: calc(100% - 0.6em);
+                        }
+
+                        .view-result .icon svg {
+                            width: 1.1em;
+                            transition: transform 0.3s;
+                            color: black;
+                        }
+
+                        .view-result:hover .icon svg {
+                            transform: translateX(0.1em);
+                        }
+
+                        .view-result:active .icon {
+                            transform: scale(0.95);
+                        }
+
+
+                    }
+
+                }
+
+                .bold {
+
+                    font-family: 'Poppins-Medium', sans-serif;
+
+                }
+
+            }
+
+        }
+
+        .submissionsContainer.rows {
+
+            grid-template-columns: repeat(2, 1fr);
+
+        }
+
+        .submissionsContainer.columns {}
+
+    }
+
+}
+
+::ng-deep {
+
+    .parent {
+
+        .header {
+
+            .options .optionsContainer .filterSelect {
+
+                width: 300px;
+                right: 20px;
+                position: absolute;
+
+                .mat-mdc-select-arrow-wrapper {
+                    display: none;
+                }
+                
+                .filterSelect.mat-select {
+                    display: inline;
+                }
+
+            }
+
+        }
+
+    }
+
+    
+
+}

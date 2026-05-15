@@ -1,0 +1,106 @@
+<section class="parent padded">
+
+    <div class="header">
+
+        <span class="title">Practice Papers</span>
+
+        <div class="createPP" (click)="openPage('/create-practice-paper')">
+            <img src="../../assets/iconsaxicons/bold/add.svg">
+            Create Practice Paper
+        </div>
+
+    </div>
+
+    <div class="bodyContent">
+
+        <div class="testsContainer">
+
+            <div class="testDetailsContainer" *ngFor="let test of tests" (dblclick)="openSubmissions('practice_paper', test._id)">
+    
+                <div class="containerHeader">
+    
+                    <span class="title">{{test.title}}</span>
+    
+                    <div class="options">
+
+                        <label class="switch">
+                            <input type="checkbox" [checked]="test.isActive" (change)="toggleTestStatus(test, $event)">
+                            <span class="slider"></span>
+                        </label>
+                        
+                        <span (click)="deleteTest(test)">
+                            <img src="assets/iconspichon/icons8_delete_100px.png"> 
+                        </span>
+
+                    </div>
+                    
+                </div>
+    
+                <div class="content">
+    
+                    <div class="labels">
+    
+                        <div>
+                            <i class="fa fa-list-ul"></i>
+                            <label>{{test.questions.length}}&nbsp;questions</label>
+                        </div>
+    
+                        <div>
+                            <i class="fa fa-clock-o"></i>
+                            <label>{{getTestTime(test.is_without_time, test.time)}}</label>
+                        </div>
+                         
+                        <div>
+                            <i class="fa fa-graduation-cap"></i>
+                            <label>{{test.marks}}&nbsp;marks</label>
+                        </div>
+
+                        <div>
+                            <i class="fa fa-user"></i>
+                            <label>{{test.details.added_by}}</label>
+                        </div>
+
+                        <div>
+                            <i class="fa fa-calendar-o"></i>
+                            <label>{{changeDateFormat(test.details.added_on)}}</label>
+                        </div>
+                        
+    
+                    </div>
+    
+                    <div class="bottomContainer">
+
+                        <div class="infoLabels">
+
+                            <span class="status" [ngStyle]="{'background' : test.isActive ? '#91dd91' : '#ffb3b3'}">
+                                {{test.isActive ? 'Active' : 'In Active'}}
+                            </span>
+
+                        </div>
+
+                        <div class="options">
+
+                            <span class="option" (click)="editTest(test)">
+
+                                <img src="assets/iconspichon/icons8_edit_100px.png">
+
+                                <label>Edit</label>
+
+                            </span>
+
+                            <img src="assets/iconsaxicons/bulk/arrow-square-right.svg">
+
+                        </div>
+                                            
+                    </div>
+    
+                </div>
+                               
+            </div>
+    
+        </div>
+
+
+    </div>
+
+</section>

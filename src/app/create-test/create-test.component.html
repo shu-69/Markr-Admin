@@ -1,0 +1,338 @@
+<section class="parent">
+
+    <div class="header">
+
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <span style="height: fit-content; display: flex;" (click)="goBack()">
+                <img src="assets/iconsaxicons/bulk/arrow-square-left.svg" style="width: 50px; height: 50px;">
+            </span>
+            <h1>{{pageTitle}}</h1>
+        </div>
+
+        <span class="saveButton" (click)="isEditing ? update() : submit()">
+            <img
+                [src]="isEditing ? 'assets/iconspichon/icons8_update_100px.png' : 'assets/iconspichon/icons8_save_100px.png'">
+            {{isEditing ? 'UPDATE' : 'SAVE'}}
+        </span>
+
+    </div>
+
+    <div class="testDetailsContainer">
+
+        <section class="sec1">
+
+            <div class="inputContainer">
+                <label class="titleLabel" for="testTitleInput">Title</label>
+                <input type="text" id="testTitleInput" [(ngModel)]="title">
+            </div>
+
+            <div class="inputContainer">
+                <label class="titleLabel" for="testDescriptionInput">Description</label>
+                <input type="text" id="testDescriptionInput" [(ngModel)]="description">
+            </div>
+
+        </section>
+
+        <section class="sec2">
+
+            <div class="inputContainer">
+                <label class="titleLabel" for="testTimeInput">Time(HH:mm)</label>
+                <input type="time" matInput name="time" min="00:00" max="10:00" [ngModel]="timeInString"
+                    (input)="setTimeInSeconds($event)" [disabled]="withoutTime">
+            </div>
+
+            <div class="inputContainer">
+                <label class="titleLabel" for="testDescriptionInput">Passing Marks</label>
+                <input type="number" id="testDescriptionInput" [(ngModel)]="passMarks">
+            </div>
+
+        </section>
+
+        <section>
+
+            <label class="titleLabel">Controls</label>
+
+            <div class="controls">
+
+                <div class="inputContainer">
+                    <label for="">Without Time</label>
+                    <label class="switch">
+                        <input type="checkbox" class="checkbox" [(ngModel)]="withoutTime">
+                        <div class="slider"></div>
+                    </label>
+                </div>
+
+                <div class="inputContainer">
+                    <label for="">Negative Marking</label>
+                    <label class="switch">
+                        <input type="checkbox" class="checkbox" [(ngModel)]="negativeMarking">
+                        <div class="slider"></div>
+                    </label>
+                </div>
+
+            </div>
+
+        </section>
+
+    </div>
+
+    <div style="margin-top: 20px; font-family: 'Poppins-Medium', sans-serif;
+    font-size: 26px; display: flex; align-items: center; justify-content: space-between;">
+
+        <label>Questions</label>
+
+        <span style="display: flex; padding: 15px 30px;
+        width: fit-content; gap: 15px; font-family: 'Poppins-Regular', sans-serif;
+        font-size: 21px; background: lightsteelblue; border-radius: 10px;" (click)="addBlankQuestion()">
+            <span> &#x271A;</span>Add Question</span>
+
+    </div>
+
+    <div class="questionsContainer">
+
+        <div class="question" *ngFor="let question of questions; let i = index;">
+
+            <span class="index">{{i + 1}}</span>
+
+            <div style="width: 100%;">
+
+                <input class="questionBody" type="text" placeholder="Type question here" [(ngModel)]="question.body">
+
+                <div style="margin-top: 15px; margin-top: 15px; display: flex; gap: 30px;">
+
+                    <div style="display: flex; flex-flow: column; width: fit-content; gap: 10px;">
+
+                        <label class="titleLabel">Answer type</label>
+
+                        <mat-form-field appearance="fill">
+                            <mat-select [(value)]="question.answer_type"
+                                (selectionChange)="changeAnswerType($event, question)">
+                                <mat-option
+                                    *ngFor="let option of [{'value': 'options', 'label': 'Options'}, {'value': 'boolean', 'label': 'True or False'}, {'value': 'oneword', 'label': 'One Word'}]"
+                                    [value]="option.value">
+                                    {{option.label}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                    </div>
+
+                    <div style="display: flex; flex-flow: column; width: fit-content; gap: 10px;">
+
+                        <label class="titleLabel">Marks</label>
+
+                        <div class="marksInputs">
+
+                            <input [ngClass]="{'positiveMarks': negativeMarking}" type="number" min="1" [(ngModel)]="question.marks.positive">
+
+                            <input class="negativeMarks" type="number" max="0" [(ngModel)]="question.marks.negative" *ngIf="negativeMarking">
+
+                        </div>
+
+                    </div>
+
+                    <div style="display: flex; flex-flow: column; width: fit-content; gap: 10px;">
+
+                        <label class="titleLabel">Images</label>
+
+                        <div style="height: 55px; border-radius: 4px; padding: 0 15px; background: white; align-items: center; display: flex; gap: 14px;">
+
+                            <span *ngFor="let image of question.images" style="width: 30px; height: 30px; display: block;"
+                            (contextmenu)="onQuestionImageRightClick($event, question, image)">
+                                <img [src]="image.src" style="width: 100%; height: 100%; object-fit: cover; border-radius: 5px;">
+                            </span>
+                        
+                            <span style="display: flex; align-items: center; gap: 10px;
+                            font-family: 'Poppins-Regular'; background: lightgray; border-radius: 30px;
+                            padding: 8px 10px; white-space: nowrap; font-size: 14px;" (click)="openQuestionImageSelector(question)">
+                                <img src="assets/iconspichon/icons8_add_100px_1.png" style="width: 25px; height: 25px;">
+                                Add image
+                            </span>
+                        
+                        </div>
+
+                    </div>
+
+                    <div style="display: flex; flex-flow: column; width: fit-content; gap: 10px; margin-left: auto;">
+
+                        <label class="titleLabel">Controls</label>
+
+                        <div
+                            style="background: white; height: 55px; border-radius: 4px; padding: 0 15px; display: flex; align-items: center; justify-content: center; gap: 20px;">
+
+                            <span style="display: flex; width: fit-content; justify-content: center;"
+                                (click)="removeQuestion(question)">
+                                <img src="assets/iconspichon/icons8_delete_100px.png" style="height: 30px;">
+                            </span>
+
+                            <span
+                                style="display: flex; width: fit-content; justify-content: center; background: lightgray; padding: 5px; border-radius: 10px;"
+                                (click)="changeQuestionIndex(i, i - 1)">
+                                <img src="assets/iconspichon/icons8_sort_up_100px.png" style="height: 30px;">
+                            </span>
+
+                            <span
+                                style="display: flex; width: fit-content; justify-content: center; background: lightgray; padding: 5px; border-radius: 10px;"
+                                (click)="changeQuestionIndex(i, i + 1)">
+                                <img src="assets/iconspichon/icons8_sort_down_100px.png" style="height: 30px;">
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div style="display: flex; gap: 30px;" *ngIf="question.answer_type == 'options'">
+
+                    <div style="display: flex; flex-flow: column; width: fit-content; gap: 10px;">
+
+                        <label class="titleLabel"
+                            style="display: flex; justify-content: space-between; gap: 15px;">Options
+
+                            <div style="display: flex; gap: 10px;">
+                                <span
+                                    style="width: 28px; height: 100%; background: black; color: white; border-radius: 6px; text-align: center;"
+                                    (click)="removeOption(question)">-</span>
+                                <span>{{question.answer_content.options.length}}</span>
+                                <span
+                                    style="width: 28px; height: 100%; background: black; color: white; border-radius: 6px; text-align: center;"
+                                    (click)="addOption(question)">+</span>
+                            </div>
+
+
+                        </label>
+
+                        <div class="radioOptionsContainer">
+
+                            <span style="height: 40px; display: flex;"
+                                *ngFor="let option of question.answer_content.options; let j = index">
+
+                                <label [for]="i + '' + j" style="display: flex; align-items: center; gap: 6px;">
+                                    {{getAlphabet(j) + '.'}}&nbsp;
+                                    <input type="radio" [id]="i + '' + j" [name]="'option' + i" [value]="j"
+                                        [(ngModel)]="question.answer_content.correct_answer">
+                                    <input class="optionText" type="text" [(ngModel)]="option.value">
+                                </label>
+
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                    <div style="display: flex; flex-flow: column; width: fit-content; gap: 10px;">
+
+                        <label for="" class="titleLabel">Correct Answer</label>
+
+                        <span class="correctAnswer">{{getAlphabet(question.answer_content.correct_answer)}}</span>
+
+                    </div>
+
+                </div>
+
+                <div style="display: flex; gap: 30px;" *ngIf="question.answer_type == 'boolean'">
+
+                    <div style="display: flex; flex-flow: column; width: fit-content; gap: 10px;">
+
+                        <label class="titleLabel"
+                            style="display: flex; justify-content: space-between; gap: 15px;">Options</label>
+
+                        <div class="radioOptionsContainer">
+
+                            <span style="height: 40px; display: flex;"
+                                *ngFor="let option of [ { 'value': true, 'label': 'True' }, { 'value': false, 'label': 'False' } ]; let j = index;">
+
+                                <label [for]="i + '' + j" style="display: flex; align-items: center; gap: 6px;">
+                                    {{getAlphabet(j) + '.'}}&nbsp;
+                                    <input type="radio" [id]="i + '' + j" [name]="'option' + i" [value]="option.value"
+                                        [(ngModel)]="question.answer_content.correct_answer">
+                                    {{option.label}}
+                                </label>
+
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                    <div style="display: flex; flex-flow: column; width: fit-content; gap: 10px;">
+
+                        <label for="" class="titleLabel">Correct Answer</label>
+
+                        <span class="correctAnswer"
+                            style="text-transform: capitalize;">{{question.answer_content.correct_answer}}</span>
+
+                    </div>
+
+                </div>
+
+                <div style="display: flex; gap: 30px;" *ngIf="question.answer_type == 'oneword'">
+
+                    <div style="display: flex; flex-flow: column; width: fit-content; gap: 10px;">
+
+                        <label class="titleLabel"
+                            style="display: flex; justify-content: space-between; gap: 15px;">Answer</label>
+
+                        <div class="radioOptionsContainer" style="height: 60px;">
+
+                            <input style="border: none; font-size: 22px; outline: none;" type="test"
+                                [(ngModel)]="question.answer_content.correct_answer">
+
+                        </div>
+
+                    </div>
+
+                    <div style="display: flex; flex-flow: column; width: fit-content; gap: 10px;">
+
+                        <label for="" class="titleLabel">Correct Answer</label>
+
+                        <span class="correctAnswer"
+                            style="padding: 0 10px;">{{question.answer_content.correct_answer}}</span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- <img src="assets/iconspichon/icons8_delete_100px.png"> -->
+
+        </div>
+
+    </div>
+
+</section>
+
+<div class="bottomFloatingContainer right" #bottomFloatingContainer>
+
+    <span class="positionArrow left" #positionArrow (click)="bottomFloatingContainer.classList.contains('right') ? changeFlotingContainerPosition(bottomFloatingContainer, positionArrow,  'left') : 
+    changeFlotingContainerPosition(bottomFloatingContainer, positionArrow,  'right')">
+        <img
+            [src]="positionArrow.classList.contains('left') ? 'assets/iconsaxicons/linear/arrow-left-1.svg' : 'assets/iconsaxicons/linear/arrow-right-1.svg'">
+    </span>
+
+    <span class="addQuestion" style="display: flex;" (click)="addBlankQuestion()">
+        <img src="assets/iconsaxicons/bold/add-square.svg" style="width: 30px;">
+    </span>
+
+    <span class="seperator"></span>
+
+    <span class="totalQuestions">
+        {{questions.length}}
+        <span>{{questions.length > 1 ? 'questions' : 'question'}}</span>
+    </span>
+
+</div>
+
+<div style="visibility: hidden; position: fixed;"
+[style.left.px]="menuTopLeftPosition.x"
+[style.top.px]="menuTopLeftPosition.y"
+[matMenuTriggerFor]="rightMenu"></div>
+
+<!-- standar material menu -->
+<mat-menu #rightMenu="matMenu">
+  <ng-template matMenuContent let-item="data">
+    <button mat-menu-item (click)="deleteQuestionImage(item.question, item.image)">Delete</button>
+  </ng-template>
+</mat-menu>

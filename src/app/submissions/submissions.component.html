@@ -1,0 +1,241 @@
+<section class="parent">
+
+    <div class="header">
+
+        <div class="titleContainer">
+
+            <span class="title">Submissions for {{examDetails?.title}}</span>
+
+        </div>
+
+        <div class="options">
+
+            <div class="optionsContainer">
+
+                <mat-icon
+                    (click)="enableSearchContainer = !enableSearchContainer; showSearchResults = false">search</mat-icon>
+
+            </div>
+
+            <div class="optionsContainer">
+
+                <mat-icon (click)="toogleSubmissionsViewType()">{{submissionsViewType == 'rows' ? 'view_stream' :
+                    'view_column'}}</mat-icon>
+
+                <mat-icon (click)="filterSelect.open()">filter_list
+                    
+                </mat-icon>
+
+                <mat-select class="filterSelect" #filterSelect>
+                    <mat-option> Option1 </mat-option>
+                    <mat-option> Option2 </mat-option>
+                    <mat-option> Option3 </mat-option>
+                </mat-select>
+
+            </div>
+
+        </div>
+
+        <div class="searchContainer" *ngIf="enableSearchContainer">
+
+            <mat-icon class="closeIcon"
+                (click)="enableSearchContainer = false; showSearchResults = false">cancel</mat-icon>
+
+            <form class="form">
+                <button>
+                    <svg width="17" height="16" fill="none" xmlns="http://www.w3.org/2000/svg" role="img"
+                        aria-labelledby="search">
+                        <path d="M7.667 12.667A5.333 5.333 0 107.667 2a5.333 5.333 0 000 10.667zM14.334 14l-2.9-2.9"
+                            stroke="currentColor" stroke-width="1.333" stroke-linecap="round" stroke-linejoin="round">
+                        </path>
+                    </svg>
+                </button>
+                <input class="input" [placeholder]="getSearchInputPlaceholder()" required="" type="text" #searchInput
+                    (keydown.enter)="doSearch(searchInput.value)">
+                <button class="reset" type="reset">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </form>
+
+            <div class="searchByOptionsContainer">
+
+                <mat-label>Search by</mat-label>
+
+                <mat-chip-listbox aria-label="Search type" (change)="changeSearchType($event)">
+                    <mat-chip-option value="submissionid" [selected]="searchType == 'submissionid'">Submission
+                        Id</mat-chip-option>
+                    <mat-chip-option value="candidatename" [selected]="searchType == 'candidatename'">Candidate
+                        Name</mat-chip-option>
+                    <mat-chip-option value="candidateemail" [selected]="searchType == 'candidateemail'">Candidate
+                        Email</mat-chip-option>
+                </mat-chip-listbox>
+
+            </div>
+
+            <div class="searchResultStatusContainer" *ngIf="showSearchResults">
+
+                <span class="searchResultsCount">Found {{searchResults.length}} results</span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="content">
+
+        <div class="submissionsContainer" *ngIf="!showSearchResults"
+            [ngClass]="submissionsViewType == 'rows' ? 'rows' : 'columns'">
+
+            <div class="submission" *ngFor="let submission of submissions">
+
+                <div class="userDetailsContainer">
+
+                    <div class="profileImage">
+
+                        <img src="../../assets/iconsaxicons/bold/user.svg" alt="">
+
+                    </div>
+
+                    <div class="candidateDetails">
+
+                        <span>Candidate name : <span class="bold">{{submission.submittedBy.name}}</span></span>
+
+                        <span>Candidate email : <span class="bold">{{submission.submittedBy.email}}</span></span>
+
+                    </div>
+
+                </div>
+
+                <div class="submissionDetails">
+
+                    <div class="row">
+
+                        <span>Submission date : <span
+                                class="bold">{{formatDate(submission.submittionDetails.date)}}</span></span>
+
+                        <span>Submission time : <span
+                                class="bold">{{formatTime(submission.submittionDetails.date)}}</span></span>
+
+                    </div>
+
+                    <div class="row">
+
+                        <span>Time taken : <span class="bold">{{submission.submittionDetails.timeTaken}}</span></span>
+
+                    </div>
+
+                </div>
+
+                <div class="footer">
+
+                    <div class="options">
+
+                        <span class="icon"><i class="fa fa-trash" aria-hidden="true"></i></span>
+
+                    </div>
+
+                    <div class="options">
+
+                        <button class="view-result"
+                            (click)="viewResult(submission.examDetails.examType, submission.examDetails.examId, submission._id)">
+                            View Result
+                            <div class="icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                                    <path fill="none" d="M0 0h24v24H0z"></path>
+                                    <path fill="currentColor"
+                                        d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z">
+                                    </path>
+                                </svg>
+                            </div>
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="submissionsContainer" *ngIf="showSearchResults"
+            [ngClass]="submissionsViewType == 'rows' ? 'rows' : 'columns'">
+
+            <div class="submission" *ngFor="let submission of searchResults">
+
+                <div class="userDetailsContainer">
+
+                    <div class="profileImage">
+
+                        <img src="../../assets/iconsaxicons/bold/user.svg" alt="">
+
+                    </div>
+
+                    <div class="candidateDetails">
+
+                        <span>Candidate name : <span class="bold">{{submission.submittedBy.name}}</span></span>
+
+                        <span>Candidate email : <span class="bold">{{submission.submittedBy.email}}</span></span>
+
+                    </div>
+
+                </div>
+
+                <div class="submissionDetails">
+
+                    <div class="row">
+
+                        <span>Submission date : <span
+                                class="bold">{{formatDate(submission.submittionDetails.date)}}</span></span>
+
+                        <span>Submission time : <span
+                                class="bold">{{formatTime(submission.submittionDetails.date)}}</span></span>
+
+                    </div>
+
+                    <div class="row">
+
+                        <span>Time taken : <span class="bold">{{submission.submittionDetails.timeTaken}}</span></span>
+
+                    </div>
+
+                </div>
+
+                <div class="footer">
+
+                    <div class="options">
+
+                        <span class="icon"><i class="fa fa-trash" aria-hidden="true"></i></span>
+
+                    </div>
+
+                    <div class="options">
+
+                        <button class="view-result"
+                            (click)="viewResult(submission.examDetails.examType, submission.examDetails.examId, submission._id)">
+                            View Result
+                            <div class="icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                                    <path fill="none" d="M0 0h24v24H0z"></path>
+                                    <path fill="currentColor"
+                                        d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z">
+                                    </path>
+                                </svg>
+                            </div>
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+

@@ -1,0 +1,15 @@
+<section class="parent">
+
+    <app-side-nav (onToggleSideNav)="onToggleSideNav($event)">
+
+    </app-side-nav>
+
+    <div class="body" [ngClass]="getBodyClass()">
+          <router-outlet></router-outlet>
+    </div>
+
+</section>
+
+
+
+<!-- <router-outlet></router-outlet> -->
